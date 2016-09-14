@@ -10,12 +10,11 @@ url_tracker = Blueprint('url', __name__, url_prefix='/url')
 @url_tracker.route('', methods=['GET', 'POST'])
 def create():
 
-    pdb.set_trace()
-
     create_form = CreateTargetForm(request.form)
 
     if create_form.validate_on_submit():
-        pass
+        print("Submitted form : {0}".format(create_form.destination))
+        return redirect('go to view page with params')
 
     return render_template('url_tracker/create.html', form=create_form)
 
