@@ -33,6 +33,7 @@ class Target(Base):
     tracking_key = db.Column(db.String(250), nullable=True)
     manage_key = db.Column(db.String(250), nullable=True)
     active = db.Column(db.Boolean, default=True)
+    clicks = db.relationship('Click', backref='target', lazy='dynamic')
 
     def __init__(self, ip=None):
 
@@ -43,3 +44,24 @@ class Target(Base):
     def __repr__(self):
 
         return '<Target {0}>'.format(self.tracking_key)
+
+class Click(Base):
+
+    __tablename__ = 'url_tracker__click'
+
+    ip_address = db.Column(db.String(250), nullable=True)
+    user_agent = db.Column(db.String(250), nullable=True)
+    language = db.Column(db.String(250), nullable=True)
+    referrer = db.Column(db.String(500), nullable=True)
+    target_id = db.Column(db.Integer, db.ForeignKey('url_tracker__target.id'))
+
+    def __init__(self, ip=None, agent=None, lang=None, ref=None):
+
+        self.ip_address = ip
+        self.user_agent = agent
+        self.language = lang
+        self.referrer = ref
+
+    def __repr__(self):
+
+        return '<Click {0}>'.format(self.ip_address)
