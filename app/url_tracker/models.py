@@ -9,7 +9,7 @@ def generate_key(length=10):
     for i in range(length):
 
         generated_key += random.choice(
-            string.lowercase + string.uppercase + string.digits
+            string.ascii_lowercase + string.ascii_uppercase + string.digits
         )
 
     return generated_key
@@ -35,11 +35,12 @@ class Target(Base):
     active = db.Column(db.Boolean, default=True)
     clicks = db.relationship('Click', backref='target', lazy='dynamic')
 
-    def __init__(self, ip=None):
+    def __init__(self, ip=None, dest_url=None):
 
         self.ip_address = ip
-        self.tracking_key = generate_key(length=15)
-        self.manage_key = generate_key(length=15)
+        self.destination = dest_url
+        self.tracking_key = generate_key(length=8)
+        self.manage_key = generate_key(length=8)
 
     def __repr__(self):
 
