@@ -4,7 +4,6 @@ MAINTAINER Kyle Luce <nomadmtb@gmail.com>
 RUN apt-get update && apt-get install -y \
     python3.5 \
     python3-pip \
-    build-essential \
     git
 
 RUN git clone \
