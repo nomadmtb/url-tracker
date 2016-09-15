@@ -1,20 +1,36 @@
 {% extends "_base.html" %}
 
+{% set page_title = 'Url tracker' %}
+
 {% block content %}
 
-{% for field, errors in form.errors.items() %}
-  <div class="alert alert-error">
-    {{ form[field].label }}: {{ ', '.join(errors) }}
+<div class="flexbox-container">
+
+  <div class="container">
+
+    <form method="POST" autocomplete="off">
+
+      {% if form.errors %}
+      <div class="form-group has-warning">
+      {% else %}
+      <div class="form-group">
+      {% endif %}
+
+        {% if form.errors %}
+          <div class="form-control-feedback">{{ form.errors['destination'][0] }}</div>
+          <input type="text" class="form-control form-control-warning form-control-sm" id="destination" name="destination" placeholder="http(s)://...">
+        {% else %}
+          <input type="text" class="form-control form-control-sm" id="destination" name="destination" placeholder="http(s)://...">
+        {% endif %}
+
+        {{ form.csrf_token }}
+
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Shorten</button>
+    </form>
+
   </div>
-{% endfor %}
 
-<form method="POST">
-  {{ form.csrf_token }}
+</div>
 
-  {% if form.csrf_token.errors %}
-    <div class="warning">Not a valid form</div>
-  {% endif %}
-  <div>{{ form.destination.label }} {{ form.destination }}</div>
-  <div><input type="submit" value="Submit"></div>
-</form>
 {% endblock %}
