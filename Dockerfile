@@ -1,18 +1,18 @@
 FROM ubuntu:16.04
 MAINTAINER Kyle Luce <nomadmtb@gmail.com>
 
-WORKDIR /opt/url_tracker
-
 RUN apt-get update && apt-get install -y \
-    python3 \
-    python-pip \
+    python3.5 \
+    python3-pip \
+    build-essential \
     git
 
 RUN git clone \
     https://github.com/nomadmtb/url-tracker.git \
     /opt/url_tracker
 
+RUN pip3 install --upgrade pip
+WORKDIR /opt/url_tracker
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python3"]
-CMD ["app.py"]
+CMD ["python3.5", "run.py"]
