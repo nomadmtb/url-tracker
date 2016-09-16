@@ -5,6 +5,10 @@ html {
   height: 100%;
 }
 
+.left-bordered {
+  border-left: 5px solid @bootstrap_blue;
+}
+
 body {
   display: block;
   margin: 0px;
@@ -25,7 +29,7 @@ body {
 #create-container {
   padding: 30px;
   width: 375px;
-  border-left: 5px solid @bootstrap_blue;
+  .left-bordered;
 
   > form {
       margin: 0 auto;
@@ -33,5 +37,6 @@ body {
 }
 
 #view-container {
-  background-color: limegreen;
+  padding: 30px;
+  .left-bordered;
 }
