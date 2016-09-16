@@ -5,14 +5,14 @@ from app.url_tracker.forms import CreateTargetForm
 from app.url_tracker.models import Target, Click
 import pdb
 
-url_tracker = Blueprint('url', __name__)
+url_tracker = Blueprint('url', __name__, url_prefix='/')
 
 # Create()
 # In this method we will be using the validated url from the CreateTargetForm
 # to create a new instance of the Target class. If the form validates then the
 # Tracker instance is saved to the database, else the form gets re-rendered with
 # the appropriate errors.
-@url_tracker.route('/', methods=['GET', 'POST'])
+@url_tracker.route('', methods=['GET', 'POST'])
 def create():
 
     # Create instance of the form from the request data.
@@ -41,7 +41,7 @@ def create():
 # View()
 # In this method the code will query for the appropriate Target from the db and
 # render the view page. If there is no matching Target a 404 will be raised.
-@url_tracker.route('/u/<manage_key_param>', methods=['GET'])
+@url_tracker.route('u/<manage_key_param>', methods=['GET'])
 def view(manage_key_param):
 
     # Grab the Target using the manage_key.
@@ -57,7 +57,7 @@ def view(manage_key_param):
 # In this method the key url parameter is parsed out. This will attach to the
 # Target object from the database. From here we can create a new instance of
 # the Click class and attach it to the designated Target.
-@url_tracker.route('/g/<target_key>', methods=['GET'])
+@url_tracker.route('g/<target_key>', methods=['GET'])
 def go(target_key):
 
     # If the key is supplied then proceed to lookup the Target.
