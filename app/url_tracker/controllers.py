@@ -5,7 +5,7 @@ from app.url_tracker.forms import CreateTargetForm
 from app.url_tracker.models import Target, Click
 import pdb
 
-url_tracker = Blueprint('url', __name__, url_prefix='/url')
+url_tracker = Blueprint('url', __name__, url_prefix='/')
 
 # Create()
 # In this method we will be using the validated url from the CreateTargetForm
@@ -32,20 +32,33 @@ def create():
         db.session.commit()
 
         # Redirect to the manage url for the Target.
-        return redirect('/url/{0}'.format(new_target.manage_key))
+        return redirect('/u/{0}'.format(new_target.manage_key))
 
     # Render the view with the form data.
     return render_template('url_tracker/create.html', form=create_form)
+
+
+# View()
+# In this method the code will query for the appropriate Target from the db and
+# render the view page. If there is no matching Target a 404 will be raised.
+@url_tracker.route('u/<manage_key_param>', methods=['GET'])
+def view(manage_key_param):
+
+    # Grab the Target using the manage_key.
+    selected_target = Target.query.filter_by(manage_key=manage_key_param).first()
+
+    if selected_target:
+        return render_template('url_tracker/view.html', target=selected_target)
+    else:
+        return render_template('404.html'), 404
+
 
 # Go()
 # In this method the key url parameter is parsed out. This will attach to the
 # Target object from the database. From here we can create a new instance of
 # the Click class and attach it to the designated Target.
-@url_tracker.route('/go', methods=['GET'])
-def go():
-
-    # Grab the target_key from the 'key' url parameter.
-    target_key = request.args.get('key')
+@url_tracker.route('g/<target_key>', methods=['GET'])
+def go(target_key):
 
     # If the key is supplied then proceed to lookup the Target.
     if target_key:
