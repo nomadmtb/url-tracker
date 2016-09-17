@@ -20,17 +20,7 @@
 
   <div class="divide"></div>
 
-  <table id="click_table" key="{{ 'http://127.0.0.1:8080/api/target_clicks/' + target.manage_key }}">
-    <thead>
-      <th>ip_address</th>
-      <th>user_agent</th>
-      <th>language</th>
-      <th>referrer</th>
-    </thead>
-
-    <tbody>
-    </tbody>
-  </table>
+  <canvas id="click_chart" height="400" width="450" key="{{ '/api/target_clicks/' + target.manage_key }}"></canvas>
 
 </div>
 
