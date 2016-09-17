@@ -42,9 +42,22 @@ class Target(Base):
         self.tracking_key = generate_key(length=8)
         self.manage_key = generate_key(length=8)
 
+    def to_dict(self):
+
+        data = {
+            'destination': self.destination,
+            'ip_address': self.ip_address,
+            'tracking_key': self.tracking_key,
+            'manage_key': self.manage_key,
+            'active': self.active,
+        }
+
+        return data
+
     def __repr__(self):
 
         return '<Target {0}>'.format(self.tracking_key)
+
 
 class Click(Base):
 
@@ -62,6 +75,17 @@ class Click(Base):
         self.user_agent = agent
         self.language = lang
         self.referrer = ref
+
+    def to_dict(self):
+
+        data = {
+            'ip_address': self.ip_address,
+            'user_agent': self.user_agent,
+            'language': self.language,
+            'referrer': self.referrer,
+        }
+
+        return data
 
     def __repr__(self):
 

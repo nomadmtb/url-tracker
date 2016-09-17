@@ -1,8 +1,9 @@
 # Controller methods for the Application
-from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for
+from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for, jsonify
 from app import db
 from app.url_tracker.forms import CreateTargetForm
 from app.url_tracker.models import Target, Click
+from app.url_tracker.helpers import generate_trend
 import pdb
 
 url_tracker = Blueprint('root', __name__)
@@ -94,4 +95,22 @@ def go(target_key):
     # Else, the key was not provided so render the 404 page.
     else:
 
+        return render_template('404.html'), 404
+
+
+# GetClicksForTarget()
+# In this method we will be returning JSON data that represents all of the Click
+# data for a particular Target. Will be returning Json for the Dynatable stuff
+# on the front-end.
+@url_tracker.route('/api/target_clicks/<manage_key>', methods=['GET'])
+def getClicks(manage_key):
+
+    if manage_key:
+
+        attached_target = Target.query.filter_by(manage_key=manage_key).first()
+
+        return jsonify( generate_trend( attached_target.clicks.order_by(Click.date_created).all()) )
+
+
+    else:
         return render_template('404.html'), 404

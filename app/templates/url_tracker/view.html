@@ -6,20 +6,31 @@
 
 <div class="container" id="view-container">
 
-  <h3>
+  <h2>
     Manage link
-    <small class="text-muted">{{ 'http://127.0.0.1:8080/u/' + target.manage_key }}</small>
-  </h3>
+    <small class="text-muted link-title">{{ 'http://127.0.0.1:8080/u/' + target.manage_key }}</small>
+  </h2>
 
-  <h3>
+  <h2>
     Share link
-    <small class="text-muted">{{ 'http://127.0.0.1:8080/g/' + target.tracking_key }}</small>
-  </h3>
+    <small class="text-muted link-title">{{ 'http://127.0.0.1:8080/g/' + target.tracking_key }}</small>
+  </h2>
 
-  <h3>
-    Destination
-    <small class="text-muted">{{ target.destination }}</small>
-  </h3>
+  <small class="text-muted link-title">{{ target.destination }}</small>
+
+  <div class="divide"></div>
+
+  <table id="click_table" key="{{ 'http://127.0.0.1:8080/api/target_clicks/' + target.manage_key }}">
+    <thead>
+      <th>ip_address</th>
+      <th>user_agent</th>
+      <th>language</th>
+      <th>referrer</th>
+    </thead>
+
+    <tbody>
+    </tbody>
+  </table>
 
 </div>
 
