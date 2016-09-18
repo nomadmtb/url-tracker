@@ -8,19 +8,17 @@
 
   <h2>
     Manage link
-    <small class="text-muted link-title">{{ 'http://127.0.0.1:8080/u/' + target.manage_key }}</small>
+    <small class="text-muted link-title">{{ HOSTNAME + '/u/' + target.manage_key }}</small>
   </h2>
 
   <h2>
     Share link
-    <small class="text-muted link-title">{{ 'http://127.0.0.1:8080/g/' + target.tracking_key }}</small>
+    <small class="text-muted link-title">{{ HOSTNAME + '/g/' + target.tracking_key }}</small>
   </h2>
 
   <small class="text-muted link-title">{{ target.destination }}</small>
 
-  <div class="divide"></div>
-
-  <canvas id="click_chart" height="400" width="450" key="{{ '/api/target_clicks/' + target.manage_key }}"></canvas>
+  <canvas id="click_chart" key="{{ '/api/target_clicks/' + target.manage_key }}"></canvas>
 
 </div>
 

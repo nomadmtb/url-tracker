@@ -36,6 +36,7 @@ def make_empty_series(start_date=None, end_date=None):
 
     data_dict = OrderedDict()
     end_date += datetime.timedelta(days=1)
+    start_date += datetime.timedelta(days=-1)
 
     if start_date and end_date:
 

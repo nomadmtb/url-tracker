@@ -1,5 +1,5 @@
 # Controller methods for the Application
-from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for, jsonify
+from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for, jsonify, current_app
 from app import db
 from app.url_tracker.forms import CreateTargetForm
 from app.url_tracker.models import Target, Click
@@ -49,7 +49,13 @@ def view(manage_key_param):
     selected_target = Target.query.filter_by(manage_key=manage_key_param).first()
 
     if selected_target:
-        return render_template('url_tracker/view.html', target=selected_target)
+
+        return render_template(
+            'url_tracker/view.html',
+            target=selected_target,
+            HOSTNAME=current_app.config['SERVERNAME']
+        )
+
     else:
         return render_template('404.html'), 404
 
@@ -110,7 +116,6 @@ def getClicks(manage_key):
         attached_target = Target.query.filter_by(manage_key=manage_key).first()
 
         return jsonify( generate_trend( attached_target.clicks.order_by(Click.date_created).all()) )
-
 
     else:
         return render_template('404.html'), 404
