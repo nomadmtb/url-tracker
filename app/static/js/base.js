@@ -1,6 +1,6 @@
 // Hide and fade in the element (ele).
-function toggle_element(ele) {
-  ele.hide().delay(500).fadeIn();
+function toggle_element(ele, time) {
+  ele.hide().delay(time).fadeIn();
 }
 
 // Process the click table data.
@@ -62,12 +62,13 @@ $(document).ready(function(){
 
   // Look for that create form and fade it in.
   if ( $('#create-container').length ) {
-    toggle_element( $('#create-container') );
+    toggle_element( $('#create-container'), 500 );
   }
 
   // Look for the click data table.
   if ( $('#click_chart').length ) {
     console.log('detected table.')
+    toggle_element( $('#view-container'), 500 );
     process_click_chart( $('#click_chart') );
   }
 
