@@ -1,6 +1,6 @@
 from app.url_tracker.models import Target, Click
 from collections import OrderedDict
-import datetime
+import datetime, io, csv
 import pdb
 
 # GenerateTrend()
@@ -49,3 +49,24 @@ def make_empty_series(start_date=None, end_date=None):
             current_date += datetime.timedelta(days=1)
 
     return data_dict
+
+# generate_csvdata()
+# This method will generate a csv file using the click data that is provided as
+# a parameter. We will escape any values that may contain a comma etc.
+def generate_csvdata(click_results):
+
+    if click_results:
+
+        output = io.StringIO()
+        writer = csv.writer(output, quoting=csv.QUOTE_MINIMAL)
+
+        # Attach the header first.
+        writer.writerow(click_results[0].to_array()[0])
+
+        for click in click_results:
+            writer.writerow( click.to_array()[1])
+
+        return output.getvalue()
+
+    else:
+        return None

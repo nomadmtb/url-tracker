@@ -76,6 +76,26 @@ class Click(Base):
         self.language = lang
         self.referrer = ref
 
+    def to_array(self):
+
+        header = [
+            'date_clicked',
+            'ip_address',
+            'user_agent',
+            'language',
+            'referrer'
+        ]
+
+        data = [
+            self.date_created.strftime('%Y-%m-%d %H:%M:%S UTC'),
+            self.ip_address,
+            self.user_agent,
+            self.language,
+            self.referrer,
+        ]
+
+        return (header, data,)
+
     def to_dict(self):
 
         data = {

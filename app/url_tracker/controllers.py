@@ -1,9 +1,9 @@
 # Controller methods for the Application
-from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for, jsonify, current_app
+from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for, jsonify, current_app, make_response
 from app import db
 from app.url_tracker.forms import CreateTargetForm
 from app.url_tracker.models import Target, Click
-from app.url_tracker.helpers import generate_trend
+from app.url_tracker.helpers import generate_trend, generate_csvdata
 import pdb
 
 url_tracker = Blueprint('root', __name__)
@@ -55,6 +55,29 @@ def view(manage_key_param):
             target=selected_target,
             HOSTNAME=current_app.config['SERVERNAME']
         )
+
+    else:
+        return render_template('404.html'), 404
+
+# GetCSV()
+# In this method, the code will query for the appropriate Target and then build
+# a csv file that will get returned to the user. The CSV will contain all of the
+# click data for the target.
+@url_tracker.route('/u/<manage_key_param>/click_data.csv', methods=['GET'])
+def getcsv(manage_key_param):
+
+    # Grab the Target using the manage_key.
+    selected_target = Target.query.filter_by(manage_key=manage_key_param).first()
+
+    if selected_target:
+
+        csv_data = generate_csvdata( selected_target.clicks.order_by(Click.date_created).all() )
+
+        resp = make_response(csv_data)
+        resp.headers['Content-Disposition'] = 'attachment; filename=mycsv.csv'
+        resp.mimetype='text/csv'
+
+        return resp
 
     else:
         return render_template('404.html'), 404
