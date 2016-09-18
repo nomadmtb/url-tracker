@@ -1,2 +1,2 @@
-# url-tracker
-A URL tracker built with Flask and SQLAlchemy
+# utldr.co
+URLs too long and need to track usage? >> **utldr.co**
