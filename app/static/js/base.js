@@ -7,8 +7,6 @@ function toggle_element(ele, time) {
 function process_click_chart(ele) {
 
   var url = ele.attr('key');
-  console.log(url);
-  console.log(ele);
 
   var jqxhr = $.getJSON(url, function() {
     console.log("Success!");
@@ -67,8 +65,7 @@ $(document).ready(function(){
 
   // Look for the click data table.
   if ( $('#click_chart').length ) {
-    console.log('detected table.')
-    toggle_element( $('#view-wrapper'), 500 );
+    toggle_element( $('#view-container'), 500 );
     process_click_chart( $('#click_chart') );
   }
 

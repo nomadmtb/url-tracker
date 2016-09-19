@@ -27,18 +27,45 @@ def create():
     # Check to see if the form passes validation. Just checks for a valid URL.
     if create_form.validate_on_submit():
 
-        # Create the new instance of the Target class with the validated data.
-        new_target = Target(
-            ip = request.remote_addr,
-            dest_url = create_form.destination.data,
-        )
+        # We will attempt to generate a unique pair of keys 15 times at max.
+        target_to_create = None
+        for i in range(15):
 
-        # Save the new item to the database.
-        db.session.add(new_target)
-        db.session.commit()
+            # Create the new instance of the Target class with the validated data.
+            new_target = Target(
+                ip = request.remote_addr,
+                dest_url = create_form.destination.data,
+            )
 
-        # Redirect to the manage url for the Target.
-        return redirect('/u/{0}'.format(new_target.manage_key))
+            # Now we can validate the keys.
+            existing_targets = Target.query.filter(
+                db.or_(
+                    Target.tracking_key == new_target.manage_key,
+                    Target.manage_key == new_target.tracking_key
+                )
+            ).all()
+
+            # If there are not matches in the DB already. Safe to create a new
+            # Target object.
+            if not existing_targets:
+                target_to_create = new_target
+                # We have a valid Target. Break out to save.
+                break
+
+        if target_to_create:
+
+            # Save the new item to the database.
+            db.session.add(new_target)
+            db.session.commit()
+
+            # Redirect to the manage url for the Target.
+            return redirect('/u/{0}'.format(new_target.manage_key))
+
+        else:
+
+            # Return to the create page for a retry.
+            return redirect('/')
+
 
     # Render the view with the form data.
     return render_template('url_tracker/create.html', form=create_form)
@@ -79,13 +106,20 @@ def getcsv(manage_key_param):
 
     if selected_target:
 
-        csv_data = generate_csvdata( selected_target.clicks.order_by(Click.date_created).all() )
+        clicks = selected_target.clicks.order_by(Click.date_created).all()
 
-        resp = make_response(csv_data)
-        resp.headers['Content-Disposition'] = 'attachment; filename=mycsv.csv'
-        resp.mimetype='text/csv'
+        # if there is click data return it. Else render 404.
+        if clicks:
 
-        return resp
+            csv_data = generate_csvdata(clicks)
+            resp = make_response(csv_data)
+            resp.headers['Content-Disposition'] = 'attachment; filename=mycsv.csv'
+            resp.mimetype='text/csv'
+            return resp
+
+        # There is no clicks for this Target yet.
+        else:
+            return render_template('404.html'), 404
 
     else:
         return render_template('404.html'), 404
