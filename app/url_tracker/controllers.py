@@ -59,6 +59,7 @@ def view(manage_key_param):
         return render_template(
             'url_tracker/view.html',
             target=selected_target,
+            click_count=selected_target.clicks.count(),
             HOSTNAME=current_app.config['SERVERNAME']
         )
 

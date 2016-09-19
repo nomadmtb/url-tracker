@@ -4,41 +4,57 @@
 
 {% block content %}
 
+<div id="title-head">
+  <h1><a href="/">utldr.co</a> <span class="make_it_blue">|</span>
+    <small class="text-muted">tldr 4 urls</small>
+  </h1>
+</div>
+
 <div class="container" id="view-container">
 
-  <div id="view-wrapper">
+  <h4>Shortened URL | <small class="text-muted">{{ target.manage_key }}</small></h4>
+  <br>
 
-    <h2>Shortened URL | <small class="text-muted">{{ target.manage_key }}</small></h2>
-    <br>
+  <table class="table table-sm">
+    <tbody>
+      <tr>
+        <td>View click data with this one</td>
+        <td><b>{{ HOSTNAME + '/u/' + target.manage_key }}</b></td>
+      </tr>
+      <tr>
+        <td>Share this one with users</td>
+        <td><b>{{ HOSTNAME + '/g/' + target.tracking_key }}</b></td>
+      </tr>
+      <tr>
+        <td>This is where the link goes</td>
+        <td><a href="{{ target.destination }}" target="_blank">Open destination</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
 
-    <table class="table table-sm">
-      <tbody>
-        <tr>
-          <td>View click data with this one</td>
-          <td><b>{{ HOSTNAME + '/u/' + target.manage_key }}</b></td>
-        </tr>
-        <tr>
-          <td>Share this one with users</td>
-          <td><b>{{ HOSTNAME + '/g/' + target.tracking_key }}</b></td>
-        </tr>
-        <tr>
-          <td>This is where the link goes</td>
-          <td><a href="{{ target.destination }}" target="_blank">Open destination</a></td>
-        </tr>
-      </tbody>
-    </table>
-    <br>
+  <h4>History | <small class="text-muted">{{ click_count }} click(s)</small></h4>
+  <canvas id="click_chart" key="{{ '/api/target_clicks/' + target.manage_key }}"></canvas>
+  <br>
 
-    <h3>Click History</h3>
-    <canvas id="click_chart" key="{{ '/api/target_clicks/' + target.manage_key }}"></canvas>
-    <br>
+  {% if click_count > 0 %}
+  <a class="btn btn-primary" href="{{ '/u/' + target.manage_key + '/click_data.csv' }}" role="button">
+    download clicks
+  </a>
+  {% else %}
+  <a class="btn btn-primary disabled" href="{{ '/u/' + target.manage_key + '/click_data.csv' }}" role="button">
+    download clicks
+  </a>
+  {% endif %}
 
-    <a class="btn btn-primary" href="{{ '/u/' + target.manage_key + '/click_data.csv' }}" role="button">
-      download data
-    </a>
+</div>
 
-  </div>
-
+<div id="view-footer">
+  <span>
+    <a href="/">utldr.co</a> <span class="make_it_blue">|</span>
+    <a href="https://github.com/nomadmtb/utldr" target="_blank">Github</a> <span class="make_it_blue">|</span>
+    <a href="https://www.twitter.com/nomadmtb" target="_blank">Twitter</a>
+  </span>
 </div>
 
 {% endblock %}
