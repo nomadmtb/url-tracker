@@ -6,7 +6,7 @@ import pdb
 # GenerateTrend()
 # This method will take an ordered list or click data and combine it into an
 # OrderedDict that has the number of clicks per day.
-def generate_trend(click_data):
+def generate_trend(click_data, days=35):
 
     if click_data:
 
@@ -23,9 +23,21 @@ def generate_trend(click_data):
             formatted_date = click.date_created.strftime('%m-%d-%Y')
             data[formatted_date] = data[formatted_date] + 1
 
+        # If we have more than 30 days then we can trim it down to 30 days of
+        # click data. Converting OrderedDict to array and slicing it. Then
+        # overwriting the existing variable for data.
+        if len(data) > days:
+
+            data = OrderedDict(
+                list( data.items() )[-days:]
+            )
+
+        # Return data to calling function
         return data
 
+    # No data for Target.
     else:
+
         return None
 
 # make_empty_series()
