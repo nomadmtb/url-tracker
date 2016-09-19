@@ -4,7 +4,9 @@
 
 {% block content %}
 
-  <div class="container" id="create-container">
+<div class="container" id="create-container">
+
+  <div id="create-form-wrapper">
 
     <form method="POST" autocomplete="off">
 
@@ -15,10 +17,10 @@
       {% endif %}
 
         {% if form.errors %}
-          <div class="form-control-feedback">{{ form.errors['destination'][0] }}</div>
-          <input type="text" class="form-control form-control-warning form-control-sm" id="destination" name="destination" placeholder="http(s)://...">
+        <div class="form-control-feedback">{{ form.errors['destination'][0] }}</div>
+        <input type="text" class="form-control form-control-warning form-control-sm" id="destination" name="destination" placeholder="http(s)://...">
         {% else %}
-          <input type="text" class="form-control form-control-sm" id="destination" name="destination" placeholder="http(s)://...">
+        <input type="text" class="form-control form-control-sm" id="destination" name="destination" placeholder="http(s)://...">
         {% endif %}
 
         {{ form.csrf_token }}
@@ -28,5 +30,7 @@
     </form>
 
   </div>
+
+</div>
 
 {% endblock %}

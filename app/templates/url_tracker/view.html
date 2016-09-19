@@ -6,34 +6,38 @@
 
 <div class="container" id="view-container">
 
-  <h2>Shortened URL | <small class="text-muted">{{ target.manage_key }}</small></h2>
-  <br>
+  <div id="view-wrapper">
 
-  <table class="table table-sm">
-    <tbody>
-      <tr>
-        <td>View click data with this one</td>
-        <td><b>{{ HOSTNAME + '/u/' + target.manage_key }}</b></td>
-      </tr>
-      <tr>
-        <td>Share this one with users</td>
-        <td><b>{{ HOSTNAME + '/g/' + target.tracking_key }}</b></td>
-      </tr>
-      <tr>
-        <td>This is where the link goes</td>
-        <td>{{ target.destination }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <br>
+    <h2>Shortened URL | <small class="text-muted">{{ target.manage_key }}</small></h2>
+    <br>
 
-  <h3>Click History</h3>
-  <canvas id="click_chart" key="{{ '/api/target_clicks/' + target.manage_key }}"></canvas>
-  <br>
+    <table class="table table-sm">
+      <tbody>
+        <tr>
+          <td>View click data with this one</td>
+          <td><b>{{ HOSTNAME + '/u/' + target.manage_key }}</b></td>
+        </tr>
+        <tr>
+          <td>Share this one with users</td>
+          <td><b>{{ HOSTNAME + '/g/' + target.tracking_key }}</b></td>
+        </tr>
+        <tr>
+          <td>This is where the link goes</td>
+          <td><a href="{{ target.destination }}" target="_blank">Open destination</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
 
-  <a class="btn btn-primary" href="{{ '/u/' + target.manage_key + '/click_data.csv' }}" role="button">
-    download data
-  </a>
+    <h3>Click History</h3>
+    <canvas id="click_chart" key="{{ '/api/target_clicks/' + target.manage_key }}"></canvas>
+    <br>
+
+    <a class="btn btn-primary" href="{{ '/u/' + target.manage_key + '/click_data.csv' }}" role="button">
+      download data
+    </a>
+
+  </div>
 
 </div>
 

@@ -62,13 +62,13 @@ $(document).ready(function(){
 
   // Look for that create form and fade it in.
   if ( $('#create-container').length ) {
-    toggle_element( $('#create-container'), 500 );
+    toggle_element( $('#create-form-wrapper'), 500 );
   }
 
   // Look for the click data table.
   if ( $('#click_chart').length ) {
     console.log('detected table.')
-    toggle_element( $('#view-container'), 500 );
+    toggle_element( $('#view-wrapper'), 500 );
     process_click_chart( $('#click_chart') );
   }
 
