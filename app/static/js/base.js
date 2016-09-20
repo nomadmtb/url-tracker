@@ -9,7 +9,7 @@ function process_click_chart(ele) {
   var url = ele.attr('key');
 
   var jqxhr = $.getJSON(url, function() {
-    console.log("Success!");
+    console.log('successful get');
   })
   .done( function(data) {
 
@@ -56,7 +56,6 @@ function process_click_chart(ele) {
 
 // Document READY.
 $(document).ready(function(){
-  console.log('Ready!');
 
   // Look for that create form and fade it in.
   if ( $('#create-container').length ) {
