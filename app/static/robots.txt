@@ -3,3 +3,4 @@ Allow: /
 Disallow: /u/*
 Disallow: /api/*
 Disallow: /g/*
+Disallow: /static/*
