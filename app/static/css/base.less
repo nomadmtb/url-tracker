@@ -7,12 +7,26 @@ html {
   overflow-y: scroll;
 }
 
+body {
+  padding-top: 100px;
+}
+
+#head-wrap {
+  background-color: white;
+  position: fixed;
+  margin: 0px;
+  padding: 0px;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
 #title-head {
   width: 75%;
   max-width: 900px;
   min-width: 555px;
   margin: 0 auto;
-  margin-bottom: 35px;
+  border-bottom: 1px solid lightgray;
   padding: 10px;
 
   > h1 {
@@ -41,7 +55,7 @@ html {
 }
 
 #view-footer {
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
   left: 0;
@@ -96,6 +110,7 @@ body {
 }
 
 #create-form-wrapper {
+  visibility: hidden;
   .left-bordered;
   padding: 30px;
   width: 375px;
@@ -105,12 +120,13 @@ body {
 }
 
 #view-container {
-  .left-bordered;
   width: 75%;
   margin: 0 auto;
   max-width: 900px;
   min-width: 565px;
   padding: 30px;
+  padding-bottom: 47px;
+  visibility: hidden;
 }
 
 #click_chart {

@@ -1,6 +1,6 @@
 // Hide and fade in the element (ele).
 function toggle_element(ele, time) {
-  ele.hide().delay(time).fadeIn();
+  ele.css('visibility','visible').hide().delay(500).fadeIn();
 }
 
 // Process the click table data.
