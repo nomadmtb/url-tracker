@@ -3,6 +3,11 @@ function toggle_element(ele, time) {
   ele.css('visibility','visible').hide().delay(500).fadeIn();
 }
 
+// Load the tooltips on the page.
+function load_tooltips() {
+  $('[data-toggle="tooltip"]').tooltip()
+}
+
 // Process the click table data.
 function process_click_chart(ele) {
 
@@ -61,6 +66,9 @@ $(document).ready(function(){
   if ( $('#create-container').length ) {
     toggle_element( $('#create-form-wrapper'), 500 );
   }
+
+  // Load all of the tooltips.
+  load_tooltips();
 
   // Look for the click data table.
   if ( $('#click_chart').length ) {

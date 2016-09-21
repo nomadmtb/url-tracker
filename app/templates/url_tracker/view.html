@@ -19,18 +19,26 @@
 
   <table class="table table-sm">
     <tbody>
+
       <tr>
         <td>View click data with this one</td>
-        <td><b>{{ HOSTNAME + '/u/' + target.manage_key }}</b></td>
+        <td data-toggle="tooltip" data-placement="top" title="Be sure to save this link!">
+          <b>{{ HOSTNAME + '/u/' + target.manage_key }}</b>
+        </td>
       </tr>
+
       <tr>
         <td>Share this one with users</td>
-        <td><b>{{ HOSTNAME + '/g/' + target.tracking_key }}</b></td>
+        <td data-toggle="tooltip" data-placement="bottom" title="Shortened version">
+          <b>{{ HOSTNAME + '/g/' + target.tracking_key }}</b>
+        </td>
       </tr>
+
       <tr>
         <td>This is where the link goes</td>
         <td><a href="{{ target.destination }}" target="_blank">Open destination</a></td>
       </tr>
+
     </tbody>
   </table>
   <br>
