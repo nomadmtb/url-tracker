@@ -4,26 +4,20 @@ module.exports = function(grunt) {
     cacheBust: {
 
       options: {
-        assets: ['app/static/css/*', 'app/static/js/*'],
-        baseDir: './static/'
+        assets: ['app/static/css/**', 'app/static/js/**'],
+        baseDir: 'app/static/',
+        jsonOutput: true
       },
 
       taskName: {
         files: [{
           expand: true,
-          cwd: 'app/templates'
+          cwd: 'app/',
+          src: ['templates/**/*.html']
         }]
       }
+    }
 
-      taskName: {
-        options: {
-          assets: ['app/static/css/*', 'app/static/js/*'],
-          baseDir: './static/'
-        },
-        src: ['app/templates/_base.html']
-      }
-
-    },
   });
 
   grunt.loadNpmTasks('grunt-cache-bust');
