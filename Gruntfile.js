@@ -1,21 +1,16 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
+
     cacheBust: {
+      assets: ['app/static/css/**', 'app/static/js/**']
+    }
 
-      options: {
-        assets: ['app/static/css/**', 'app/static/js/**'],
-        baseDir: 'app/static/',
-        jsonOutput: true
-      },
-
-      taskName: {
-        files: [{
-          expand: true,
-          cwd: 'app/',
-          src: ['templates/**/*.html']
-        }]
-      }
+    taskName: {
+      files: [{
+        expand: true,
+        src: ['app/templates/*/**.html']
+      }]
     }
 
   });
