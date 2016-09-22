@@ -4,15 +4,15 @@ module.exports = function(grunt) {
 
     cacheBust: {
       options: {
-        assets: ['/static/**/*.css', '/static/**/*.js'],
-        baseDir: 'app'
+        assets: ['static/css/*.css', 'static/js/*.js'],
+        baseDir: 'app/'
       },
 
       taskName: {
         files: [{
           expand: true,
           cwd: 'app/templates',
-          src: ['*.html']
+          src: ['**/*.html']
         }]
       }
     }
