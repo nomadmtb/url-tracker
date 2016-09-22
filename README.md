@@ -22,6 +22,6 @@ pip install -r requirements.txt
 If you don't want to build the project to see it, here are a few images of the
 application.
 
-![HomePage](https://github.com/nomadmtb/utldr/raw/master/readme_img/homepage.png)
+![HomePage](http://i.imgur.com/zWVl5xz.png)
 
-![DetailsPAge](https://github.com/nomadmtb/utldr/raw/master/readme_img/results.png)
+![DetailsPAge](http://i.imgur.com/LkdsnuY.png)
