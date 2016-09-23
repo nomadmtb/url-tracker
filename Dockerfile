@@ -21,7 +21,7 @@ RUN rm /tmp/get-pip.py
 
 # Cloning code from github
 RUN git clone \
-    https://github.com/nomadmtb/url-tracker.git \
+    https://github.com/nomadmtb/utldr.git \
     /opt/url_tracker
 
 # Install required python packages
