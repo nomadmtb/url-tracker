@@ -6,7 +6,8 @@ module.exports = function(grunt) {
       options: {
         assets: ['static/css/*.css', 'static/js/*.js'],
         baseDir: './app/',
-        separator: '.'
+        separator: '.',
+        deleteOriginals: true
       },
 
       taskName: {
