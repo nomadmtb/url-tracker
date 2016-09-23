@@ -22,11 +22,11 @@ RUN rm /tmp/get-pip.py
 # Cloning code from github
 RUN git clone \
     https://github.com/nomadmtb/utldr.git \
-    /opt/url_tracker
+    /opt/utldr
 
 # Install required python packages
 RUN pip3.5 install --upgrade pip
-WORKDIR /opt/url_tracker
+WORKDIR /opt/utldr
 RUN pip install -r requirements.txt
 
 # Install npm packages and hash the static files
