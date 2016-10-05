@@ -1,14 +1,13 @@
 # Controller methods for the Application
 from flask import (
-    Blueprint, request, render_template, flash, g, session, redirect, url_for,
-    jsonify, current_app, make_response, send_from_directory
+    Blueprint, request, render_template, flash, redirect,
+    jsonify, current_app, make_response, send_from_directory, abort
 )
 
 from app import db
 from app.url_tracker.forms import CreateTargetForm
 from app.url_tracker.models import Target, Click
 from app.url_tracker.helpers import generate_trend, generate_csvdata
-import pdb
 
 url_tracker = Blueprint('root', __name__)
 
@@ -91,7 +90,7 @@ def view(manage_key_param):
         )
 
     else:
-        return render_template('404.html'), 404
+        abort(404)
 
 # GetCSV()
 # In this method, the code will query for the appropriate Target and then build
@@ -119,10 +118,10 @@ def getcsv(manage_key_param):
 
         # There is no clicks for this Target yet.
         else:
-            return render_template('404.html'), 404
+            abort(404)
 
     else:
-        return render_template('404.html'), 404
+        abort(404)
 
 
 # Go()
@@ -162,12 +161,12 @@ def go(target_key):
         # Target was not in the database with a matching tracking_key.
         else:
 
-            return render_template('404.html'), 404
+            abourt(404)
 
     # Else, the key was not provided so render the 404 page.
     else:
 
-        return render_template('404.html'), 404
+        abourt(404)
 
 
 # GetClicksForTarget()
@@ -185,7 +184,7 @@ def getClicks(manage_key):
         return jsonify( generate_trend( attached_target.clicks.order_by(Click.date_created).all()) )
 
     else:
-        return render_template('404.html'), 404
+        return abort(404)
 
 
 # Robots()
