@@ -29,4 +29,4 @@ application.
 
 ![HomePage](http://i.imgur.com/zWVl5xz.png)
 
-![DetailsPAge](http://i.imgur.com/LkdsnuY.png)
+![DetailsPage](http://i.imgur.com/LkdsnuY.png)
