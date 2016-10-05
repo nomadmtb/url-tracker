@@ -8,7 +8,12 @@ SQLAlchemy and Flask.
 ## To build the docker image.
 To build the docker image simply run the following.
 ```sh
-docker build -t utldr-dev .
+docker build -t utldr-co .
+```
+
+To run the container image in daemon mode run the following.
+```sh
+docker run -d -p 127.0.0.1:8080:8080 -it utldr-co
 ```
 
 ## Requirements
