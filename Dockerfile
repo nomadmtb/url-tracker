@@ -33,7 +33,10 @@ RUN pip install -r requirements.txt
 RUN ln -fs /usr/bin/nodejs /usr/local/bin/node
 RUN npm install -g grunt-cli
 RUN npm install --save-dev
-RUN npm install -g grunt-cli
+
+# Installing fs-extra manually until cache-bust is updated
+RUN npm install --save-dev fs-extra
+
 RUN grunt --verbose cacheBust
 
 # Run the program
