@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="description" content="uTLDR is a url shortener that collects and reports click-through data. It's 100% free and easy to use. Just paste your url in the form below to get started.">
+  <meta name="keywords" content="URL, shortener, tracker, traffic, data, goo.gl, bit.ly, too long didn't read, ">
+  <meta name="author" content="Kyle Luce">
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -17,10 +21,10 @@
 
 <body>
 
-  <div class="flexbox-container">
-    {% block content %}
-    {% endblock %}
-  </div>
+  {% include "_google.html" %}
+
+  {% block content %}
+  {% endblock %}
 
 </body>
 

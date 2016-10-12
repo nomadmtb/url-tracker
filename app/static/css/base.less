@@ -1,8 +1,80 @@
 // out: base.css, compress: true
 @bootstrap_blue: #428bca;
+@black: #373a3c;
 
 html {
   height: 100%;
+  overflow-y: scroll;
+}
+
+body {
+  padding-top: 100px;
+}
+
+#head-wrap {
+  background-color: white;
+  position: fixed;
+  margin: 0px;
+  padding: 0px;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#title-head {
+  width: 75%;
+  max-width: 900px;
+  min-width: 555px;
+  margin: 0 auto;
+  border-bottom: 1px solid lightgray;
+  padding: 10px;
+
+  > h1 {
+    > a {
+      color: @black;
+      text-decoration: none;
+    }
+  }
+}
+
+#title-footer {
+  width: 75%;
+  max-width: 900px;
+  margin: 0 auto;
+  margin-top: 25px;
+  padding: 10px;
+  text-align: center;
+
+  > span {
+
+    > a {
+      color: @black;
+    }
+
+  }
+}
+
+#view-footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  background-color: white;
+  text-align: center;
+
+  > span {
+
+    > a {
+      color: @black;
+    }
+
+  }
+}
+
+.make_it_blue {
+  color: @bootstrap_blue;
+  font-weight: bold;
 }
 
 .left-bordered {
@@ -24,24 +96,37 @@ body {
 }
 
 .flexbox-container {
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
+  flex-direction: column;
   align-items: center;
   height: 100%;
 }
 
 #create-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+#create-form-wrapper {
+  visibility: hidden;
+  .left-bordered;
   padding: 30px;
   width: 375px;
-  .left-bordered;
-
   > form {
       margin: 0 auto;
   }
+}
+
+#view-container {
+  width: 75%;
+  margin: 0 auto;
+  max-width: 900px;
+  min-width: 565px;
+  padding: 30px;
+  padding-bottom: 47px;
+  visibility: hidden;
 }
 
 #click_chart {
@@ -50,10 +135,15 @@ body {
   height: 100%;
 }
 
-#view-container {
-  padding: 30px;
-  width: 75%;
-  min-width: 555px;
-
-  .left-bordered;
+#error_items {
+  h1 {
+    text-align: center;
+  }
+  p {
+    text-align: center;
+  }
+  a {
+    text-decoration: None;
+    color: @bootstrap_blue;
+  }
 }

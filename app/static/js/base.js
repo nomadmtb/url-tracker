@@ -1,17 +1,20 @@
 // Hide and fade in the element (ele).
-function toggle_element(ele) {
-  ele.hide().delay(500).fadeIn();
+function toggle_element(ele, time) {
+  ele.css('visibility','visible').hide().delay(500).fadeIn();
+}
+
+// Load the tooltips on the page.
+function load_tooltips() {
+  $('[data-toggle="tooltip"]').tooltip()
 }
 
 // Process the click table data.
 function process_click_chart(ele) {
 
   var url = ele.attr('key');
-  console.log(url);
-  console.log(ele);
 
   var jqxhr = $.getJSON(url, function() {
-    console.log("Success!");
+    console.log('successful get');
   })
   .done( function(data) {
 
@@ -58,16 +61,18 @@ function process_click_chart(ele) {
 
 // Document READY.
 $(document).ready(function(){
-  console.log('Ready!');
 
   // Look for that create form and fade it in.
   if ( $('#create-container').length ) {
-    toggle_element( $('#create-container') );
+    toggle_element( $('#create-form-wrapper'), 500 );
   }
+
+  // Load all of the tooltips.
+  load_tooltips();
 
   // Look for the click data table.
   if ( $('#click_chart').length ) {
-    console.log('detected table.')
+    toggle_element( $('#view-container'), 500 );
     process_click_chart( $('#click_chart') );
   }
 

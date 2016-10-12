@@ -1,40 +1,70 @@
 {% extends "_base.html" %}
 
-{% set page_title = 'Url tracker | view' %}
+{% set page_title = 'utldr.co | view url details' %}
 
 {% block content %}
 
+<div id="head-wrap">
+  <div id="title-head">
+    <h1><a href="/">utldr.co</a> <span class="make_it_blue">|</span>
+      <small class="text-muted">tldr 4 urls</small>
+    </h1>
+  </div>
+</div>
+
 <div class="container" id="view-container">
 
-  <h2>Shortened URL | <small class="text-muted">{{ target.manage_key }}</small></h2>
+  <h4>Shortened URL | <small class="text-muted">{{ target.manage_key }}</small></h4>
   <br>
 
   <table class="table table-sm">
     <tbody>
+
       <tr>
         <td>View click data with this one</td>
-        <td><b>{{ HOSTNAME + '/u/' + target.manage_key }}</b></td>
+        <td data-toggle="tooltip" data-placement="top" title="Be sure to save this link!">
+          <b>{{ HOSTNAME + '/u/' + target.manage_key }}</b>
+        </td>
       </tr>
+
       <tr>
         <td>Share this one with users</td>
-        <td><b>{{ HOSTNAME + '/g/' + target.tracking_key }}</b></td>
+        <td data-toggle="tooltip" data-placement="bottom" title="Shortened version">
+          <b>{{ HOSTNAME + '/g/' + target.tracking_key }}</b>
+        </td>
       </tr>
+
       <tr>
         <td>This is where the link goes</td>
-        <td>{{ target.destination }}</td>
+        <td><a href="{{ target.destination }}" target="_blank">Open destination</a></td>
       </tr>
+
     </tbody>
   </table>
   <br>
 
-  <h3>Click History</h3>
+  <h4>History | <small class="text-muted">{{ click_count }} click(s)</small></h4>
   <canvas id="click_chart" key="{{ '/api/target_clicks/' + target.manage_key }}"></canvas>
   <br>
 
+  {% if click_count > 0 %}
   <a class="btn btn-primary" href="{{ '/u/' + target.manage_key + '/click_data.csv' }}" role="button">
-    download data
+    download clicks
   </a>
+  {% else %}
+  <a class="btn btn-primary disabled" href="{{ '/u/' + target.manage_key + '/click_data.csv' }}" role="button">
+    download clicks
+  </a>
+  {% endif %}
 
+</div>
+
+<div id="view-footer">
+  <span>
+    <a href="/">utldr.co</a> <span class="make_it_blue">|</span>
+    <a href="https://github.com/nomadmtb/utldr" target="_blank">github</a> <span class="make_it_blue">|</span>
+    <a href="https://www.twitter.com/nomadmtb" target="_blank">twitter</a>
+  </span>
 </div>
 
 {% endblock %}

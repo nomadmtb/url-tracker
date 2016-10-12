@@ -1,32 +1,56 @@
 {% extends "_base.html" %}
 
-{% set page_title = 'Url tracker | welcome' %}
+{% set page_title = 'utldr.co | Shorten a link' %}
 
 {% block content %}
 
+<div id="head-wrap">
+  <div id="title-head">
+    <h1><a href="/">utldr.co</a> <span class="make_it_blue">|</span>
+      <small class="text-muted">tldr 4 urls</small>
+    </h1>
+  </div>
+</div>
+
+<div class="flexbox-container">
+
   <div class="container" id="create-container">
 
-    <form method="POST" autocomplete="off">
+    <div id="create-form-wrapper">
 
-      {% if form.errors %}
-      <div class="form-group has-warning">
-      {% else %}
-      <div class="form-group">
-      {% endif %}
+      <form method="POST" autocomplete="off">
 
         {% if form.errors %}
-          <div class="form-control-feedback">{{ form.errors['destination'][0] }}</div>
-          <input type="text" class="form-control form-control-warning form-control-sm" id="destination" name="destination" placeholder="http(s)://...">
+        <div class="form-group has-warning">
         {% else %}
-          <input type="text" class="form-control form-control-sm" id="destination" name="destination" placeholder="http(s)://...">
+        <div class="form-group">
         {% endif %}
 
-        {{ form.csrf_token }}
+          {% if form.errors %}
+          <div class="form-control-feedback">{{ form.errors['destination'][0] }}</div>
+          <input type="text" class="form-control form-control-warning form-control-sm" id="destination" name="destination" placeholder="http(s)://...">
+          {% else %}
+          <input type="text" class="form-control form-control-sm" id="destination" name="destination" placeholder="http(s)://...">
+          {% endif %}
 
-      </div>
-      <button type="submit" class="btn btn-primary btn-sm">Shorten</button>
-    </form>
+            {{ form.csrf_token }}
+
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm">Shorten</button>
+      </form>
+
+    </div>
 
   </div>
 
-{% endblock %}
+  <div id="title-footer">
+    <span>
+      <a href="/">utldr.co</a> <span class="make_it_blue">|</span>
+      <a href="https://github.com/nomadmtb/utldr" target="_blank">github</a> <span class="make_it_blue">|</span>
+      <a href="https://www.twitter.com/nomadmtb" target="_blank">twitter</a>
+    </span>
+  </div>
+
+</div>
+
+  {% endblock %}

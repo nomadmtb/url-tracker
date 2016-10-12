@@ -1,10 +1,13 @@
 # Controller methods for the Application
-from flask import Blueprint, request, render_template, flash, g, session, redirect, url_for, jsonify, current_app, make_response
+from flask import (
+    Blueprint, request, render_template, flash, redirect,
+    jsonify, current_app, make_response, send_from_directory, abort
+)
+
 from app import db
 from app.url_tracker.forms import CreateTargetForm
 from app.url_tracker.models import Target, Click
 from app.url_tracker.helpers import generate_trend, generate_csvdata
-import pdb
 
 url_tracker = Blueprint('root', __name__)
 
@@ -13,6 +16,7 @@ url_tracker = Blueprint('root', __name__)
 # to create a new instance of the Target class. If the form validates then the
 # Tracker instance is saved to the database, else the form gets re-rendered with
 # the appropriate errors.
+#
 @url_tracker.route('/', methods=['GET', 'POST'])
 def create():
 
@@ -22,18 +26,45 @@ def create():
     # Check to see if the form passes validation. Just checks for a valid URL.
     if create_form.validate_on_submit():
 
-        # Create the new instance of the Target class with the validated data.
-        new_target = Target(
-            ip = request.remote_addr,
-            dest_url = create_form.destination.data,
-        )
+        # We will attempt to generate a unique pair of keys 15 times at max.
+        target_to_create = None
+        for i in range(15):
 
-        # Save the new item to the database.
-        db.session.add(new_target)
-        db.session.commit()
+            # Create the new instance of the Target class with the validated data.
+            new_target = Target(
+                ip = request.remote_addr,
+                dest_url = create_form.destination.data,
+            )
 
-        # Redirect to the manage url for the Target.
-        return redirect('/u/{0}'.format(new_target.manage_key))
+            # Now we can validate the keys.
+            existing_targets = Target.query.filter(
+                db.or_(
+                    Target.tracking_key == new_target.manage_key,
+                    Target.manage_key == new_target.tracking_key
+                )
+            ).all()
+
+            # If there are not matches in the DB already. Safe to create a new
+            # Target object.
+            if not existing_targets:
+                target_to_create = new_target
+                # We have a valid Target. Break out to save.
+                break
+
+        if target_to_create:
+
+            # Save the new item to the database.
+            db.session.add(new_target)
+            db.session.commit()
+
+            # Redirect to the manage url for the Target.
+            return redirect('/u/{0}'.format(new_target.manage_key))
+
+        else:
+
+            # Return to the create page for a retry.
+            return redirect('/')
+
 
     # Render the view with the form data.
     return render_template('url_tracker/create.html', form=create_form)
@@ -42,6 +73,7 @@ def create():
 # View()
 # In this method the code will query for the appropriate Target from the db and
 # render the view page. If there is no matching Target a 404 will be raised.
+#
 @url_tracker.route('/u/<manage_key_param>', methods=['GET'])
 def view(manage_key_param):
 
@@ -53,16 +85,18 @@ def view(manage_key_param):
         return render_template(
             'url_tracker/view.html',
             target=selected_target,
+            click_count=selected_target.clicks.count(),
             HOSTNAME=current_app.config['SERVERNAME']
         )
 
     else:
-        return render_template('404.html'), 404
+        abort(404)
 
 # GetCSV()
 # In this method, the code will query for the appropriate Target and then build
 # a csv file that will get returned to the user. The CSV will contain all of the
 # click data for the target.
+#
 @url_tracker.route('/u/<manage_key_param>/click_data.csv', methods=['GET'])
 def getcsv(manage_key_param):
 
@@ -71,22 +105,30 @@ def getcsv(manage_key_param):
 
     if selected_target:
 
-        csv_data = generate_csvdata( selected_target.clicks.order_by(Click.date_created).all() )
+        clicks = selected_target.clicks.order_by(Click.date_created).all()
 
-        resp = make_response(csv_data)
-        resp.headers['Content-Disposition'] = 'attachment; filename=mycsv.csv'
-        resp.mimetype='text/csv'
+        # if there is click data return it. Else render 404.
+        if clicks:
 
-        return resp
+            csv_data = generate_csvdata(clicks)
+            resp = make_response(csv_data)
+            resp.headers['Content-Disposition'] = 'attachment; filename=mycsv.csv'
+            resp.mimetype='text/csv'
+            return resp
+
+        # There is no clicks for this Target yet.
+        else:
+            abort(404)
 
     else:
-        return render_template('404.html'), 404
+        abort(404)
 
 
 # Go()
 # In this method the key url parameter is parsed out. This will attach to the
 # Target object from the database. From here we can create a new instance of
 # the Click class and attach it to the designated Target.
+#
 @url_tracker.route('/g/<target_key>', methods=['GET'])
 def go(target_key):
 
@@ -119,18 +161,19 @@ def go(target_key):
         # Target was not in the database with a matching tracking_key.
         else:
 
-            return render_template('404.html'), 404
+            abourt(404)
 
     # Else, the key was not provided so render the 404 page.
     else:
 
-        return render_template('404.html'), 404
+        abourt(404)
 
 
 # GetClicksForTarget()
 # In this method we will be returning JSON data that represents all of the Click
 # data for a particular Target. Will be returning Json for the Dynatable stuff
 # on the front-end.
+#
 @url_tracker.route('/api/target_clicks/<manage_key>', methods=['GET'])
 def getClicks(manage_key):
 
@@ -141,4 +184,12 @@ def getClicks(manage_key):
         return jsonify( generate_trend( attached_target.clicks.order_by(Click.date_created).all()) )
 
     else:
-        return render_template('404.html'), 404
+        return abort(404)
+
+
+# Robots()
+# This method will simply render the robots.txt file back to the user.
+#
+@url_tracker.route('/robots.txt', methods=['GET'])
+def robots():
+    return send_from_directory(current_app.static_folder, 'robots.txt')

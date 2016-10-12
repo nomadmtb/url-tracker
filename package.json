@@ -1,0 +1,8 @@
+{
+  "name": "utldr",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-cache-bust": "^1.3.0"
+  }
+}
