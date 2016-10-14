@@ -1,7 +1,8 @@
 from app.url_tracker.models import Target, Click
 from collections import OrderedDict
 import datetime, io, csv
-import pdb
+
+DATETIME_FORMAT = '%m-%d-%Y'
 
 # GenerateTrend()
 # This method will take an ordered list or click data and combine it into an
@@ -17,10 +18,14 @@ def generate_trend(click_data, days=35):
             end_date=click_data[-1].date_created
         )
 
+        # If there is no data then return
+        if not data:
+            return None
+
         # Iterate over the actual click data and update the counts based on the
         # formatted_date.
         for click in click_data:
-            formatted_date = click.date_created.strftime('%m-%d-%Y')
+            formatted_date = click.date_created.strftime(DATETIME_FORMAT)
             data[formatted_date] = data[formatted_date] + 1
 
         # If we have more than 30 days then we can trim it down to 30 days of
@@ -46,19 +51,28 @@ def generate_trend(click_data, days=35):
 # population.
 def make_empty_series(start_date=None, end_date=None):
 
+    # We want to strip the times so converting to date
+    start_date = start_date.date()
+    end_date = end_date.date()
+
     data_dict = OrderedDict()
-    end_date += datetime.timedelta(days=1)
-    start_date += datetime.timedelta(days=-1)
 
     if start_date and end_date:
 
-        current_date = start_date
+        # Initialize with the start date
+        data_dict[start_date.strftime(DATETIME_FORMAT)] = 0
 
-        # Keep processing until we reach the end date + 1 day
-        while (current_date <= end_date):
+        # We will append delta number of days starting with current_date
+        delta = abs((start_date - end_date).days)
+        current_date = start_date + datetime.timedelta(days=1)
 
-            data_dict[current_date.strftime('%m-%d-%Y')] = 0
+        # Looping over for each day between start and end
+        for i in range(delta):
+            data_dict[current_date.strftime(DATETIME_FORMAT)] = 0
             current_date += datetime.timedelta(days=1)
+
+    else:
+        return None
 
     return data_dict
 
@@ -82,3 +96,12 @@ def generate_csvdata(click_results):
 
     else:
         return None
+
+# datetime_filter()
+# This function will be our jinja2 filter that will consistently format our
+# different datetime objects.
+def datetime_filter(input_datetime, format="%c"):
+
+    datetime_str = input_datetime.strftime(format)
+
+    return datetime_str

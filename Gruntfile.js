@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 
     cacheBust: {
       options: {
-        assets: ['static/css/*.css', 'static/js/*.js'],
+        assets: ['static/css/*.css', 'static/js/*.js', 'static/img/*.ico'],
         baseDir: './app/',
         separator: '.',
         deleteOriginals: true
