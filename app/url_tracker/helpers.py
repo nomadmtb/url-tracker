@@ -51,9 +51,11 @@ def generate_trend(click_data, days=35):
 # population.
 def make_empty_series(start_date=None, end_date=None):
 
+    today = datetime.datetime.utcnow().date()
+
     # We want to strip the times so converting to date
     start_date = start_date.date()
-    end_date = end_date.date()
+    end_date = today
 
     data_dict = OrderedDict()
 
