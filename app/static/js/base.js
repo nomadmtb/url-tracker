@@ -54,6 +54,13 @@ function process_click_chart(ele) {
       chart_data.push(data[key]);
     }
 
+    if (chart_data.length == 1 && chart_labels.length == 1) {
+      chart_data.push(null);
+      chart_data.unshift(null);
+      chart_labels.push('');
+      chart_labels.unshift('');
+    }
+
     console.log(chart_data);
 
     var myLineChart = new Chart(ele, {
