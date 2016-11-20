@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="description" content="uTLDR is a url shortener that collects and reports click-through data. It's 100% free and easy to use. Just paste your url in the form below to get started.">
+  <meta name="description" content="utldr.co is a url shortener that collects and reports click-through data. It's 100% free and easy to use. Just paste your url in the form below to get started.">
   <meta name="keywords" content="URL, shortener, tracker, traffic, data, goo.gl, bit.ly, too long didn't read, ">
   <meta name="author" content="Kyle Luce">
 
@@ -16,6 +16,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
   <script src="/static/js/Chart.min.js"></script>
+
+  {% block optional_includes %}
+  {% endblock %}
+
   <script src="/static/js/base.js"></script>
   <title>{{ page_title }}</title>
 </head>
