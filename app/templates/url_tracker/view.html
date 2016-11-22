@@ -1,7 +1,7 @@
 {% extends "_base.html" %}
 
 {% block optional_includes %}
-{% with CURRENT_HOSTNAME=HOSTNAME, current_target=target %}
+{% with LINK=(HOSTNAME + '/u/' + target.manage_key), TITLE=('utldr.co | View Details' + target.manage_key) %}
 {% include "_facebook_head.html" %}
 {% endwith %}
 {% endblock %}
