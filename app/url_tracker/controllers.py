@@ -80,7 +80,10 @@ def create():
 @url_tracker.route('/stats', methods=['GET'])
 def stats():
 
-    return render_template('url_tracker/stats.html')
+    return render_template(
+        'url_tracker/stats.html',
+        HOSTNAME=current_app.config['SERVERNAME']
+    )
 
 
 # View()
@@ -207,9 +210,11 @@ def getClicks(manage_key):
 @url_tracker.route('/api/click_stats', methods=['GET'])
 def getClickStats():
 
+    # Load all clicks from the application...
     clicks = Click.query.order_by(Click.date_created).all()
+
+    # Calculate the number of days to generate a trend for.
     num_days = (clicks[-1].date_created - clicks[0].date_created).days
-    print("DAYS: {0}".format(num_days))
 
     return jsonify( generate_trend( clicks, days=num_days ) )
 
