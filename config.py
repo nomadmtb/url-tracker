@@ -12,4 +12,4 @@ CSRF_ENABLED = True
 CSRF_SESSION_KEY = ''.join([random.choice(string.ascii_letters + string.digits + string.punctuation) for n in range(50)])
 SECRET_KEY = ''.join([random.choice(string.ascii_letters + string.digits + string.punctuation) for n in range(50)])
 
-SERVERNAME = '127.0.0.1:8080' if DEBUG else 'http://utldr.co'
+SERVERNAME = 'http://127.0.0.1:8080' if DEBUG else 'http://utldr.co'

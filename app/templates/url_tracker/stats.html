@@ -1,0 +1,38 @@
+{% extends "_base.html" %}
+
+{% block optional_includes %}
+{% include "_amcharts.html" %}
+{% endblock %}
+
+{% set page_title = 'utldr.co | site stats' %}
+
+{% block content %}
+
+<div id="head-wrap">
+  <div id="title-head">
+    <h1><a href="/">utldr.co</a> <span class="make_it_blue">|</span>
+      <small class="text-muted">tldr 4 urls</small>
+    </h1>
+  </div>
+</div>
+
+<div class="container" id="view-container">
+
+  <h4>Statistics | <small class="text-muted">Redirects Per Day</small></h4>
+  <br>
+
+  <div id="click_summary_chart" key="{{ HOSTNAME + '/api/click_stats' }}"></div>
+  <br>
+
+</div>
+
+<div id="view-footer">
+  <span>
+    <a href="/">utldr.co</a> <span class="make_it_blue">|</span>
+    <a href="https://github.com/nomadmtb/utldr" target="_blank">github</a> <span class="make_it_blue">|</span>
+    <a href="https://www.twitter.com/_kgeo" target="_blank">twitter</a> <span class="make_it_blue">|</span>
+    <a href="/stats">site stats</a>
+  </span>
+</div>
+
+{% endblock %}

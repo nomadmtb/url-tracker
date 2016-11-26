@@ -8,6 +8,8 @@ from app import db
 from app.url_tracker.forms import CreateTargetForm
 from app.url_tracker.models import Target, Click
 from app.url_tracker.helpers import generate_trend, generate_csvdata
+from datetime import datetime
+import pdb
 
 url_tracker = Blueprint('root', __name__)
 
@@ -30,7 +32,8 @@ def create():
         target_to_create = None
         for i in range(15):
 
-            # Create the new instance of the Target class with the validated data.
+            # Create the new instance of the Target class with the validated
+            # data.
             new_target = Target(
                 ip = request.remote_addr,
                 dest_url = create_form.destination.data,
@@ -68,6 +71,19 @@ def create():
 
     # Render the view with the form data.
     return render_template('url_tracker/create.html', form=create_form)
+
+
+# Stats()
+# This method will simply render the stats page that will show the click data
+# across all tracked links.
+#
+@url_tracker.route('/stats', methods=['GET'])
+def stats():
+
+    return render_template(
+        'url_tracker/stats.html',
+        HOSTNAME=current_app.config['SERVERNAME']
+    )
 
 
 # View()
@@ -185,6 +201,22 @@ def getClicks(manage_key):
 
     else:
         return abort(404)
+
+# GetClickStats()
+# This method will pull in all of the clicks from the entire application and
+# return json data back to the requestor. Will populate our amCharts view via
+# AJAX.
+#
+@url_tracker.route('/api/click_stats', methods=['GET'])
+def getClickStats():
+
+    # Load all clicks from the application...
+    clicks = Click.query.order_by(Click.date_created).all()
+
+    # Calculate the number of days to generate a trend for.
+    num_days = (clicks[-1].date_created - clicks[0].date_created).days
+
+    return jsonify( generate_trend( clicks, days=num_days ) )
 
 
 # Robots()
