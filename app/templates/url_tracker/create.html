@@ -1,5 +1,9 @@
 {% extends "_base.html" %}
 
+{% block optional_includes %}
+{% include "_capcha_script.html" %}
+{% endblock %}
+
 {% set page_title = 'utldr.co | Shorten a link' %}
 
 {% block content %}
@@ -36,7 +40,8 @@
             {{ form.csrf_token }}
 
         </div>
-        <button type="submit" class="btn btn-primary btn-sm">Shorten</button>
+        <button type="submit" id="submit_button" class="btn btn-primary btn-sm">Shorten</button>
+        <div class="g-recaptcha" data-sitekey="{{ recapcha_key }}"></div>
       </form>
 
     </div>

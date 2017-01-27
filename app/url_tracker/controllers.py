@@ -9,6 +9,7 @@ from app.url_tracker.forms import CreateTargetForm
 from app.url_tracker.models import Target, Click
 from app.url_tracker.helpers import generate_trend, generate_csvdata
 from datetime import datetime
+import requests, json
 import pdb
 
 url_tracker = Blueprint('root', __name__)
@@ -27,6 +28,22 @@ def create():
 
     # Check to see if the form passes validation. Just checks for a valid URL.
     if create_form.validate_on_submit():
+
+        resp = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            params = {
+                'secret': current_app.config.get('RECAPCHA_SECRET'),
+                'response': request.form['g-recaptcha-response'],
+            }
+        )
+
+        pdb.set_trace()
+
+        if json.loads(resp.text)['success'] is False:
+            return redirect('/')
+
+        #except:
+        #    return redirect('/')
 
         # We will attempt to generate a unique pair of keys 15 times at max.
         target_to_create = None
@@ -70,7 +87,9 @@ def create():
 
 
     # Render the view with the form data.
-    return render_template('url_tracker/create.html', form=create_form)
+    return render_template('url_tracker/create.html', form=create_form,
+        recapcha_key=current_app.config.get('RECAPCHA_KEY')
+    )
 
 
 # Stats()
