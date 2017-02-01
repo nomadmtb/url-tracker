@@ -11,9 +11,14 @@ To build the docker image simply run the following.
 docker build -t utldr-co .
 ```
 
-To run the container image in daemon mode run the following.
+To run the container image in daemon mode run the following. Be sure to pass in
+your RECAPCHA_KEY and RECAPCHA_SECRET env variables for Google Recapcha.
 ```sh
-docker run -d -p 127.0.0.1:8080:8080 -it utldr-co
+docker run -d \
+ -p 127.0.0.1:8080:8080 \
+ -e RECAPCHA_KEY='...insert_your_key_here...' \
+ -e RECAPCHA_SECRET='...insert_your_secret_here...' \
+ -it utldr-co
 ```
 
 ## Requirements
