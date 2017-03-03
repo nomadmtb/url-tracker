@@ -231,9 +231,9 @@ def getClickStats():
     clicks = Click.query.order_by(Click.date_created).all()
 
     # Calculate the number of days to generate a trend for.
-    num_days = (clicks[-1].date_created - clicks[0].date_created).days
+    num_days = (clicks[0].date_created - clicks[-1].date_created).days
 
-    return jsonify( generate_trend( clicks, days=num_days ) )
+    return jsonify( generate_trend( clicks ) )
 
 
 # Robots()
