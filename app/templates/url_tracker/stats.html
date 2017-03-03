@@ -1,7 +1,6 @@
 {% extends "_base.html" %}
 
 {% block optional_includes %}
-{% include "_amcharts.html" %}
 {% endblock %}
 
 {% set page_title = 'utldr.co | site stats' %}
@@ -21,7 +20,8 @@
   <h4>Statistics | <small class="text-muted">Redirects Per Day</small></h4>
   <br>
 
-  <div id="click_summary_chart" key="{{ HOSTNAME + '/api/click_stats' }}"></div>
+  <!--<div id="click_summary_chart" key="{{ HOSTNAME + '/api/click_stats' }}"></div> -->
+  <canvas id="click_summary_chart" key="/api/click_stats"></canvas>
   <br>
 
 </div>

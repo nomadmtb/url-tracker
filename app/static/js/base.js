@@ -36,73 +36,6 @@ function find_max(input_data) {
   return current_max;
 }
 
-// Process the click summary data.
-function process_click_summary_chart(ele) {
-
-  var url = ele.attr('key');
-
-  var jqxhr = $.getJSON(url, function() {
-    console.log('successful get');
-  })
-  .done( function(data) {
-    console.log(data);
-    var summary_data = [];
-
-    for (var key in data) {
-      summary_data.push({
-        date: key,
-        value: data[key]
-      });
-    }
-
-    console.log(summary_data);
-
-    var chart = AmCharts.makeChart("click_summary_chart", {
-      "type": "serial",
-      "theme": "light",
-      "marginRight": 80,
-      "dataProvider": summary_data,
-      "valueAxes": [{
-        "position": "left",
-        "title": "Redirects"
-      }],
-      "graphs": [{
-        "id": "g1",
-        "fillAlphas": 0.4,
-        "valueField": "value",
-        "balloonText": "<div style='margin:5px; font-size:19px;'><b>[[value]]</b> Clicks</div>"
-      }],
-      "chartScrollbar": {
-        "graph": "g1",
-        "scrollbarHeight": 80,
-        "backgroundAlpha": 0,
-        "selectedBackgroundAlpha": 0.1,
-        "selectedBackgroundColor": "#428bca",
-        "graphFillAlpha": 0,
-        "graphLineAlpha": 0.5,
-        "selectedGraphFillAlpha": 0,
-        "selectedGraphLineAlpha": 1,
-        "autoGridCount": true,
-        "color": "#AAAAAA"
-      },
-      "chartCursor": {
-        "categoryBalloonDateFormat": "MM-DD-YYYY",
-        "cursorPosition": "mouse"
-      },
-      "categoryField": "date",
-      "categoryAxis": {
-        "minPeriod": "DD",
-        "parseDates": true,
-        "position": "top"
-      },
-      "export": {
-        "enabled": true,
-        "dateFormat": "MM-DD-YYYY"
-      }
-    });
-  });
-}
-
 // Process the click table data.
 function process_click_chart(ele) {
 
@@ -183,7 +116,7 @@ $(document).ready(function(){
   // Look for the click summary graph.
   if ( $('#click_summary_chart').length ) {
     toggle_element( $('#view-container'), 500 );
-    process_click_summary_chart( $('#click_summary_chart') );
+    process_click_chart( $('#click_summary_chart') );
   }
 
 });
