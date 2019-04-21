@@ -27,11 +27,3 @@ packages.  To install the packages you can run the following.
 ```sh
 pip install -r requirements.txt
 ```
-
-## ScreenShots
-If you don't want to build the project to see it, here are a few images of the
-application.
-
-![HomePage](http://i.imgur.com/zWVl5xz.png)
-
-![DetailsPage](http://i.imgur.com/LkdsnuY.png)
